@@ -60,9 +60,9 @@ import { mockMyAds } from '../data/mockMyAds'
 
 const hero = {
   title: 'we care ALOT Community Hub',
-  subtitle: 'Building local communities through free and affordable leisure activities.',
+  subtitle: 'Adults Leisure Outdoor and Technical Indoor Activities Group',
   description:
-    'We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.'
+    'Building local communities through free and affordable leisure activities. We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.'
 }
 
 const userPaths = [
