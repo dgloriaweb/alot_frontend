@@ -24,7 +24,7 @@
         <p class="user-type-who"><strong>{{ path.who }}</strong></p>
         <p class="user-type-why"><em>{{ path.why }}</em></p>
         <p class="user-type-how">{{ path.how }}</p>
-        <router-link class="btn btn-primary" :to="path.ctaLink">
+        <router-link :class="['btn', `btn-${path.type}`]" :to="path.ctaLink">
           {{ path.cta }}
         </router-link>
       </article>
@@ -56,6 +56,7 @@
 import { ref, onMounted } from 'vue'
 import { fetchLatestAds } from '../services/api'
 import { mockAds } from '../data/mockAds'
+import { mockMyAds } from '../data/mockMyAds'
 
 const hero = {
   title: 'we care ALOT Community Hub',
@@ -67,11 +68,12 @@ const hero = {
 const userPaths = [
   {
     id: 'path-free-time',
+    type: 'attendant',
     image:
       'https://images.unsplash.com/photo-1695665128110-703ff866cdab?q=80&w=auto=format&fit=crop&w=640&q=80',
     alt: 'Bored woman looking out her window',
     photoCredit: 'Photo: Unsplash / em b',
-    who: 'If you have free time',
+    who: 'If you have free time, and you are looking for activities to join',
     why: 'Working weekdays, or short of leisure time, still looking for activities to join?',
     how: 'Browse sessions near you and connect with local communities.',
     cta: 'Attend activities',
@@ -79,9 +81,10 @@ const userPaths = [
   },
   {
     id: 'path-tutor',
+    type: 'tutor',
     image:
       'https://images.unsplash.com/photo-1761034114091-6d30447e25aa?auto=format&fit=crop&w=640&q=80',
-    alt: 'Creative instructor demonstrating painting basics',
+    alt: 'Creative instructor demonstrating yoga basics',
     photoCredit: 'Photo: Unsplash / Christian Harb',
     who: 'If you have the skills but no venue',
     why: 'Ready to guide a group yet still searching for the right space?',
@@ -91,6 +94,7 @@ const userPaths = [
   },
   {
     id: 'path-venue',
+    type: 'venue',
     image:
       'https://images.unsplash.com/photo-1616045152590-ebda3a20804c?auto=format&fit=crop&w=640&q=80',
     alt: 'Bright community hall with chairs and plants',
@@ -103,6 +107,7 @@ const userPaths = [
   },
   {
     id: 'path-organiser',
+    type: 'organiser',
     image:
       'https://images.unsplash.com/photo-1601566674556-3ac2a27fec9f?auto=format&fit=crop&w=640&q=80',
     alt: 'Group of adults enjoying a creative workshop',
@@ -117,10 +122,35 @@ const userPaths = [
 
 const latestAds = ref([])
 const error = ref('')
+
+// Combine mockAds and mockMyAds, then sort by publishedAt in descending order
+// Deduplicate by title and location to avoid showing the same ad twice
+// Put mockMyAds first so they take precedence (more complete data)
+const allAds = [...mockMyAds, ...mockAds].map(ad => ({
+  ...ad,
+  // Normalize publishedAt - use publishedAt or created_at, convert to Date for sorting
+  sortDate: ad.publishedAt 
+    ? new Date(ad.publishedAt).getTime() 
+    : (ad.created_at ? new Date(ad.created_at).getTime() : 0),
+  // Create a unique key for deduplication (title + location)
+  uniqueKey: `${(ad.title || '').toLowerCase().trim()}_${(ad.location || ad.postcode || '').toLowerCase().trim()}`
+}))
+
+// Deduplicate: keep first occurrence (which will be from mockMyAds since it's first)
+const seen = new Set()
+const deduplicatedAds = allAds.filter(ad => {
+  if (seen.has(ad.uniqueKey)) {
+    return false
+  }
+  seen.add(ad.uniqueKey)
+  return true
+})
+
 const peekAds = ref(
-  [...mockAds].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  )
+  deduplicatedAds
+    .filter(ad => ad.is_public !== false) // Only show public ads
+    .sort((a, b) => b.sortDate - a.sortDate) // Descending order (newest first)
+    .slice(0, 10) // Limit to 10 most recent
 )
 
 onMounted(async () => {
@@ -243,6 +273,42 @@ h1 {
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border: none;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-organiser {
+  background-color: #4a90e2;
+}
+
+.btn-organiser:hover {
+  background-color: #357abd;
+}
+
+.btn-attendant {
+  background-color: #f39c12;
+}
+
+.btn-attendant:hover {
+  background-color: #d68910;
+}
+
+.btn-venue {
+  background-color: #27ae60;
+}
+
+.btn-venue:hover {
+  background-color: #229954;
+}
+
+.btn-tutor {
+  background-color: #9b59b6;
+}
+
+.btn-tutor:hover {
+  background-color: #8e44ad;
 }
 
 .latest-list {
