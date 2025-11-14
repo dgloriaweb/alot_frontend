@@ -57,7 +57,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { fetchMyAds } from '../services/api'
+import { fetchMyAds, deleteAd } from '../services/api'
 import AdCard from '../components/AdCard.vue'
 
 const router = useRouter()
@@ -118,10 +118,29 @@ async function handleDelete(ad) {
   if (!confirm(`Are you sure you want to delete "${ad.title || 'this ad'}"?`)) {
     return
   }
-  // TODO: Call delete API endpoint
-  // await deleteAd(ad.id)
-  // Then reload ads
-  loadAds()
+  
+  try {
+    // For localhost:3000, simulate deletion
+    if (window.location.hostname === 'localhost' && window.location.port === '3000') {
+      console.log('Deleting ad:', ad.id)
+      ads.value = ads.value.filter(a => a.id !== ad.id)
+      alert('Ad deleted successfully! (Mock)')
+      return
+    }
+    
+    // Real API call
+    await deleteAd(ad.id)
+    alert('Ad deleted successfully!')
+    loadAds()
+  } catch (error) {
+    console.error('Error deleting ad:', error)
+    if (error.response?.status === 401) {
+      alert('Please log in to delete ads.')
+      router.push('/login')
+    } else {
+      alert('Error deleting ad. Please try again.')
+    }
+  }
 }
 
 onMounted(() => {

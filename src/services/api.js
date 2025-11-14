@@ -54,5 +54,30 @@ export async function fetchMyAds() {
   return response.data
 }
 
+export async function createAd(adData) {
+  const response = await apiClient.post('/api/ads', adData)
+  return response.data
+}
+
+export async function updateAd(id, adData) {
+  const response = await apiClient.put(`/api/ads/${id}`, adData)
+  return response.data
+}
+
+export async function deleteAd(id) {
+  const response = await apiClient.delete(`/api/ads/${id}`)
+  return response.data
+}
+
+export async function addCategory(categoryData) {
+  const response = await apiClient.post('/api/categories', categoryData)
+  return response.data
+}
+
+export async function fetchCategories() {
+  const response = await apiClient.get('/api/categories')
+  return response.data
+}
+
 export default apiClient
 

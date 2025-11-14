@@ -144,8 +144,40 @@ npm run serve
 http://localhost:3000/post-ad
 
 ### flow
-* select the type of ad you'd like to post
+* User must be logged in (email required - cannot post without email)
+* Select the type of ad you'd like to post (Organiser, Attendant, Venue, Tutor)
+* Fill in the form details
+* Submit ad - content is saved but kept pending until admin approval
+* User receives email confirmation that ad has been submitted (if email provided)
+* In edit section, same flow applies - changes are kept pending until admin approval
+* Option to add new category via "add new" button with API endpoint
 
+### API endpoints
+
+**POST /api/ads**
+- Create a new ad
+- Requires authentication (logged in user)
+- Request body: ad data structure (see below)
+- Response: `{ message: "Ad submitted successfully. Pending admin approval.", ad: {...} }`
+- Sends email confirmation to user's email address
+
+**PUT /api/ads/{id}**
+- Update an existing ad
+- Requires authentication (logged in user)
+- Request body: ad data structure (see below)
+- Response: `{ message: "Ad updated successfully. Changes pending admin approval.", ad: {...} }`
+- Sends email confirmation to user's email address
+
+**POST /api/categories**
+- Add a new category
+- Requires authentication (logged in user)
+- Request body: `{ name: "category name", type: "main|sub", parent_id: null|category_id }`
+- Response: `{ message: "Category added successfully", category: {...} }`
+
+**GET /api/categories**
+- Fetch all available categories
+- No authentication required
+- Response: `{ categories: [...] }` 
 
 ### data structure (common fields for all ad types):
     id: 
@@ -204,14 +236,24 @@ http://localhost:3000/post-ad
 http://localhost:3000/my-ads
 
 
-
 # BACKEND
 * Latest laravel with no auth
 * use api endpoints to serve frontend
 
 ## endpoints
-POST /api/auth/request-code from http://localhost:3000/login
-POST /api/auth/verify-code to http://localhost:3000/login-code
+**Authentication:**
+- POST /api/auth/request-code (from http://localhost:3000/login)
+- POST /api/auth/verify-code (to http://localhost:3000/login-code)
+
+**Ads:**
+- GET /api/ads/my - Get user's own ads (requires authentication)
+- POST /api/ads - Create a new ad (requires authentication, sends email confirmation)
+- PUT /api/ads/{id} - Update an existing ad (requires authentication, sends email confirmation)
+- DELETE /api/ads/{id} - Delete an ad (requires authentication)
+
+**Categories:**
+- GET /api/categories - Fetch all available categories (no authentication required)
+- POST /api/categories - Add a new category (requires authentication)
 
 
 ## database tasks

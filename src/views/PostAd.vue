@@ -51,6 +51,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { mockMyAds } from '../data/mockMyAds'
+import { createAd, updateAd } from '../services/api'
 import OrganiserForm from '../components/forms/OrganiserForm.vue'
 import AttendantForm from '../components/forms/AttendantForm.vue'
 import VenueForm from '../components/forms/VenueForm.vue'
@@ -204,21 +205,37 @@ function mapAdToFormData(ad) {
 
 async function handleSubmit(formData) {
   try {
+    // For localhost:3000, simulate API call
+    if (window.location.hostname === 'localhost' && window.location.port === '3000') {
+      console.log(isEditMode.value ? 'Updating ad:' : 'Submitting ad:', formData)
+      alert(
+        isEditMode.value
+          ? 'Ad updated successfully! Your changes are pending admin approval. (Mock)'
+          : 'Ad submitted successfully! Your ad is pending admin approval. You will receive an email confirmation. (Mock)'
+      )
+      router.push('/my-ads')
+      return
+    }
+
+    // Real API calls
     if (isEditMode.value) {
-      // TODO: Call API to update ad
-      // await updateAd(editId.value, formData)
-      console.log('Updating ad:', editId.value, formData)
-      alert('Ad updated successfully! (This is a mock update)')
+      await updateAd(editId.value, formData)
+      alert('Ad updated successfully! Your changes are pending admin approval.')
     } else {
-      // TODO: Call API to submit ad
-      // await submitAd(formData)
-      console.log('Submitting ad:', formData)
-      alert('Ad submitted successfully! (This is a mock submission)')
+      await createAd(formData)
+      alert('Ad submitted successfully! Your ad is pending admin approval. You will receive an email confirmation.')
     }
     router.push('/my-ads')
   } catch (error) {
     console.error('Error submitting ad:', error)
-    alert('Error submitting ad. Please try again.')
+    if (error.response?.status === 422) {
+      alert('Please fill in all required fields correctly.')
+    } else if (error.response?.status === 401) {
+      alert('Please log in to post an ad.')
+      router.push('/login')
+    } else {
+      alert('Error submitting ad. Please try again.')
+    }
   }
 }
 
