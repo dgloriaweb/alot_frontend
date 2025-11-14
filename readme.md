@@ -145,29 +145,61 @@ http://localhost:3000/post-ad
 
 ### flow
 * select the type of ad you'd like to post
-*data:
+
+
+### data structure (common fields for all ad types):
     id: 
-    type: 
-    user_type: 
+    type: (Organiser, Attendant, Venue, Tutor)
+    user_type: (Organiser, Attendant, Venue, Tutor)
     title: 
-    venue:
     details: 
-    summary: 
     postcode: 
     location: 
-    indoor_outdoor: 
+    indoor_outdoor: (indoor, outdoor, both)
     category: 
     subcategory: 
     day_time: 
     duration: 
-    flexible_finish: 
+    flexible_finish: (flexible, strict)
     disability_access: 
-    dog_friendly: 
+    dog_friendly: (boolean)
     video_link: 
-    is_public: 
-    has_venue:
-    created_at:
-    publishedAt: 
+    is_public: (boolean)
+    has_venue: (boolean)
+    created_at: (ISO datetime)
+    publishedAt: (date string)
+    
+*organiser/tutor specific:
+    organiser_email: (non-public, for organisers)
+    tutor_email: (non-public, for tutors)
+    has_certificate: (boolean, for tutors only)
+    venue_needed: (boolean, for tutors only)
+    
+*attendant specific:
+    postcodes: (array of strings)
+    available_times: (array of strings)
+    drives: (boolean)
+    needs_lift: (boolean)
+    show_disabled: (boolean)
+    disability_info: 
+    additional_info: 
+    dog_friendly_only: (boolean)
+    contact_email: 
+    nickname: 
+    
+*venue specific:
+    available_days: 
+    available_duration: 
+    categories: (array of strings)
+    subcategories: (string)
+    parking: 
+    public_transport: 
+    disabled_access: 
+    toilets: (boolean)
+    tools_furniture: 
+    contact_name: 
+    contact_email: 
+    
 ## view ad
 http://localhost:3000/my-ads
 

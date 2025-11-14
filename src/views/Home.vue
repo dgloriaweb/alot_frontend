@@ -41,7 +41,7 @@
             <span>{{ formatPublished(ad.publishedAt) }}</span>
           </div>
           <h3>{{ ad.title }}</h3>
-          <p>{{ snippet(ad.summary) }}</p>
+          <p>{{ snippet(ad.summary || ad.details || '') }}</p>
         </li>
       </ul>
     </article>

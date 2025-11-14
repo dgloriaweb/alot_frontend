@@ -41,10 +41,29 @@ const error = ref('')
 onMounted(() => {
   // For localhost:3000, use mock data
   if (window.location.hostname === 'localhost' && window.location.port === '3000') {
-    // Combine public mock ads with my ads for browsing
-    ads.value = [...mockAds, ...mockMyAds].sort(
-      (a, b) => new Date(b.publishedAt || b.created_at).getTime() - new Date(a.publishedAt || a.created_at).getTime()
-    )
+    // Combine and deduplicate ads
+    const allAds = [...mockMyAds, ...mockAds].map(ad => ({
+      ...ad,
+      sortDate: ad.publishedAt 
+        ? new Date(ad.publishedAt).getTime() 
+        : (ad.created_at ? new Date(ad.created_at).getTime() : 0),
+      uniqueKey: `${(ad.title || '').toLowerCase().trim()}_${(ad.location || ad.postcode || '').toLowerCase().trim()}`
+    }))
+
+    // Deduplicate: keep first occurrence (from mockMyAds)
+    const seen = new Set()
+    const deduplicatedAds = allAds.filter(ad => {
+      if (seen.has(ad.uniqueKey)) {
+        return false
+      }
+      seen.add(ad.uniqueKey)
+      return true
+    })
+
+    // Filter for public ads only and sort by date
+    ads.value = deduplicatedAds
+      .filter(ad => ad.is_public !== false)
+      .sort((a, b) => b.sortDate - a.sortDate)
     loading.value = false
   } else {
     // TODO: Fetch from API when backend is ready
