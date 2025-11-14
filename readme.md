@@ -1,7 +1,7 @@
 # ALOT
 
 ## project description
-**Adults Leisure Outdoor and Technical Indoor Activities Group **
+Adults Leisure Outdoor and Technical Indoor Activities Group
 
 We aim to collect FREE occupations, if your sessions are paid and held on a weekly basis, the price that can be charged by advertising here is maximum £20 monthly and £5 per occasion, per person. Please note that the aim of this site is to provide a relaxed, calm environment, a safe place for adults aged 21 and above and not suitable for children. Our aim is to find adults who normally are busy weekdays in office hours, or otherwise have a weekly occupation, and have a couple of hours only weekly and a very limited budget to attend to such classes. We'd like to  build small local communities of like-minded people aroud certain activities. As well as bring in local venues "in the middle of nowhere" where people usually feel, there is nothing to do in their neighbourhood. We try to find venues for tutors, or tutors for venues, or more members to existing sessions, and the aim is not to make profit to anyone. We don't think it is fair to charge a larger fee for people, they might not find the event to their taste and not attend anymore, however if we can keep the fees low, the sessions can occur regularly, thereby building a trust, a regularity, reliability and really a safe harbour to the people that is always there, no matter if they have to skip 2-3-5-10 occasions, they know that the event is regular and keep running no matter what. Or at least any unexpected changes in the plans will be broadcasted to all subscribers. Our biggest goal would be if we could find overlapping in the communities/activities, the word of mouth spreading the joy and fun these clubs mean, and thereby show how wonderfully diverse and able people are if they get the chance. Thank you for your interest and cooperation. 
 
@@ -90,8 +90,36 @@ user saved:
 user not saved:
 - can see advertisements that users marked as "public"
 
+# FRONTEND
+## dashboard/main page
+### Hero
+Title: ALOT Community Hub
+Subtitle: Building local communities through free and affordable leisure activities.
+
+Description:
+We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.
+
+### Navigation
+4 sections aligned into 2x2 card grid (can add free stock photo later with resource indication)
+
+#### arrangement
+ * picture of a bored, sad woman in her kitchen, maybe looking out her window
+ * who (bold) "If you have free time"
+ * why (italic) "Working weekdays, or short of leisure time, still looking for activities to join?""
+ * how (normal) "Browse sessions near you and connect with local communities."
+
+ (fill in with the rest)
+
+### Peek into content
+List out and sort latest ads
+* type of ad (venue, etc)
+* short title given by the author
+* firs 150 chars with ... dots and "(read more)"
+
 ## navigation/routing structure
-later
+image.png 
+home > Attendant Page
+
 
 ## component hierarchy
 later
@@ -99,3 +127,65 @@ later
 ## mock data values
 One can extract some of the data from the above descriptions.
 
+### startup
+npm run serve
+
+## commands for AI for free decision:
+attendant can be called participant or synonimes
+
+## comands for AI to perform:
+change colors of Organiser, Attendant, Venue, Tutor to 4 different colors  in the Peek into content section as well as in the cards
+
+# BACKEND
+* Latest laravel with no auth
+* use api endpoints to serve frontend
+
+## endpoints
+POST /api/auth/request-code from http://localhost:3000/login
+POST /api/auth/verify-code to http://localhost:3000/login-code
+
+
+## database tasks
+* store user email hashed only as unique field instead of sanctum or passport
+* send email code via MailerSend and url http://localhost:3000/login-code
+* send code max 2 times
+* don't allow sending new code within 1 hour, show message "Please try again later" and die, return frontend to home. Block any ddos. Don't show button, but don't show button in devtools either, or block ip address for a day.
+* when code is passed, compare code base64  hash with users.base64_hash table column, if finding a match, return the data associated with that user 
+
+## emails
+* use mailersend
+* use mailhog for testing on localhost - set this up as default
+
+## other variables
+.env example:
+APP_NAME=alot
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+APP_FRONTEND_BASE_URL=http://localhost:3000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=alot_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+#mailhog for localhost testing
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="no-reply@budgeterapi.co.uk" - need to set a valid email on Digitalocean or anywhere
+MAIL_FROM_NAME="${APP_NAME}"
+
+#mailersend for live site
+MAIL_MAILER=mailersend
+MAILERSEND_API_KEY= <my key>
+
+
+# patreon
+setup later

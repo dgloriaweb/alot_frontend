@@ -71,7 +71,7 @@ nav a {
 }
 
 nav a.router-link-active {
-  color: #4a90e2;
+  color: #38d4c7;
 }
 
 .auth-actions {

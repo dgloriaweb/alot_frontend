@@ -27,5 +27,20 @@ export async function fetchLatestAds(limit = 5) {
   return response.data
 }
 
+export async function requestLoginCode(email) {
+  const response = await apiClient.post('/api/auth/request-code', {
+    email
+  })
+  return response.data
+}
+
+export async function verifyLoginCode(email, code) {
+  const response = await apiClient.post('/api/auth/verify-code', {
+    email,
+    code
+  })
+  return response.data
+}
+
 export default apiClient
 

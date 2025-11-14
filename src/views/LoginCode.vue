@@ -26,6 +26,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { verifyLoginCode } from '../services/api'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -38,19 +39,19 @@ async function handleVerify() {
   error.value = ''
   try {
     authStore.setLoginCode(code.value)
-    await new Promise((resolve) => setTimeout(resolve, 800))
-
-    // Mock saved user data
-    authStore.login({
-      id: 1,
-      name: 'Demo User',
-      saved: true,
-      email: authStore.email
-    })
-
+    const response = await verifyLoginCode(authStore.email, code.value)
+    
+    // Backend returns user data with hashed email
+    authStore.login(response.user)
     router.push('/dashboard')
   } catch (err) {
-    error.value = 'Could not verify code. Please try again.'
+    if (err.response?.status === 422) {
+      error.value = 'Invalid code. Please check and try again.'
+    } else if (err.response?.data?.message) {
+      error.value = err.response.data.message
+    } else {
+      error.value = 'Could not verify code. Please try again.'
+    }
   } finally {
     loading.value = false
   }
