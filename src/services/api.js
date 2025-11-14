@@ -42,5 +42,17 @@ export async function verifyLoginCode(email, code) {
   return response.data
 }
 
+export async function fetchMyAds() {
+  // For localhost:3000, use mock data instead of API call
+  if (window.location.hostname === 'localhost' && window.location.port === '3000') {
+    const { mockMyAds } = await import('../data/mockMyAds')
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(mockMyAds), 300) // Simulate API delay
+    })
+  }
+  const response = await apiClient.get('/api/ads/my')
+  return response.data
+}
+
 export default apiClient
 

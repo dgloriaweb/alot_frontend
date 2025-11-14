@@ -90,6 +90,27 @@ user saved:
 user not saved:
 - can see advertisements that users marked as "public"
 
+### startup
+npm run serve
+
+## commands for AI for free decision:
+attendant can be called participant or synonimes
+
+## comands for AI to perform:
+change colors in the "Peek into content" section as well as in the card buttons. keep primary button as teal
+for localhost:3000 url disable is logged in check and show all data
+create json to use in my-ads and other pages with sample data, at least 3 rows.
+
+## post ad
+http://localhost:3000/post-ad
+
+### flow
+* select the type of ad you'd like to post
+* see rest of description above
+
+## view ad
+http://localhost:3000/my-ads
+
 # FRONTEND
 ## dashboard/main page
 ### Hero
@@ -125,16 +146,10 @@ home > Attendant Page
 later
 
 ## mock data values
-One can extract some of the data from the above descriptions.
+We use json examples to show structure that backend should provide
 
-### startup
-npm run serve
 
-## commands for AI for free decision:
-attendant can be called participant or synonimes
 
-## comands for AI to perform:
-change colors of Organiser, Attendant, Venue, Tutor to 4 different colors  in the Peek into content section as well as in the cards
 
 # BACKEND
 * Latest laravel with no auth

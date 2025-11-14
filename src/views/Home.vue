@@ -36,7 +36,7 @@
       <ul class="latest-list">
         <li v-for="ad in peekAds" :key="ad.id">
           <div class="latest-meta">
-            <span class="badge">{{ ad.type }}</span>
+            <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
             <span>{{ ad.location }}</span>
             <span>{{ formatPublished(ad.publishedAt) }}</span>
           </div>
@@ -151,6 +151,16 @@ function formatPublished(dateString) {
   const date = new Date(dateString)
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
 }
+
+function getBadgeClass(type) {
+  if (!type) return 'organiser'
+  const lowerType = type.toLowerCase()
+  if (lowerType.includes('organiser') || lowerType.includes('organizer')) return 'organiser'
+  if (lowerType.includes('attendant') || lowerType.includes('participant')) return 'attendant'
+  if (lowerType.includes('venue')) return 'venue'
+  if (lowerType.includes('tutor') || lowerType.includes('instructor')) return 'tutor'
+  return 'organiser'
+}
 </script>
 
 <style scoped>
@@ -261,11 +271,32 @@ h1 {
 }
 
 .badge {
-  background-color: #38d4c7;
-  color: #fff;
+  display: inline-block;
+  padding: 4px 12px;
   border-radius: 999px;
-  padding: 2px 12px;
   font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-organiser {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.badge-attendant {
+  background-color: #f39c12;
+  color: white;
+}
+
+.badge-venue {
+  background-color: #27ae60;
+  color: white;
+}
+
+.badge-tutor {
+  background-color: #9b59b6;
+  color: white;
 }
 
 .latest-list h3 {

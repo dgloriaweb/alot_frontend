@@ -6,6 +6,7 @@
         <router-link to="/">Home</router-link>
         <router-link to="/browse">Browse</router-link>
         <router-link v-if="authStore.isAuthenticated" to="/post-ad">Post Ad</router-link>
+        <router-link v-if="authStore.isAuthenticated" to="/my-ads">My Ads</router-link>
         <router-link v-if="authStore.isAuthenticated" to="/dashboard">Dashboard</router-link>
       </nav>
       <div class="auth-actions">
