@@ -46,16 +46,6 @@
       </ul>
     </article>
 
-    <article class="card" v-if="latestAds.length">
-      <h2>Latest opportunities</h2>
-      <ul class="latest-list">
-        <li v-for="ad in latestAds" :key="ad.id">
-          <h3>{{ ad.title }}</h3>
-          <p>{{ ad.body }}</p>
-        </li>
-      </ul>
-    </article>
-
     <article class="card" v-if="error">
       <p class="error">{{ error }}</p>
     </article>

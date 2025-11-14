@@ -90,8 +90,6 @@ user saved:
 user not saved:
 - can see advertisements that users marked as "public"
 
-### startup
-npm run serve
 
 ## commands for AI for free decision:
 attendant can be called participant or synonimes
@@ -101,15 +99,6 @@ change colors in the "Peek into content" section as well as in the card buttons.
 for localhost:3000 url disable is logged in check and show all data
 create json to use in my-ads and other pages with sample data, at least 3 rows.
 
-## post ad
-http://localhost:3000/post-ad
-
-### flow
-* select the type of ad you'd like to post
-* see rest of description above
-
-## view ad
-http://localhost:3000/my-ads
 
 # FRONTEND
 ## dashboard/main page
@@ -143,11 +132,44 @@ home > Attendant Page
 
 
 ## component hierarchy
-later
+create nice flash messages at the top of the page, color coded, light green and light red 
 
 ## mock data values
 We use json examples to show structure that backend should provide
 
+### startup
+npm run serve
+
+## post ad
+http://localhost:3000/post-ad
+
+### flow
+* select the type of ad you'd like to post
+*data:
+    id: 
+    type: 
+    user_type: 
+    title: 
+    venue:
+    details: 
+    summary: 
+    postcode: 
+    location: 
+    indoor_outdoor: 
+    category: 
+    subcategory: 
+    day_time: 
+    duration: 
+    flexible_finish: 
+    disability_access: 
+    dog_friendly: 
+    video_link: 
+    is_public: 
+    has_venue:
+    created_at:
+    publishedAt: 
+## view ad
+http://localhost:3000/my-ads
 
 
 

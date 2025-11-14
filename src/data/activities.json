@@ -1,0 +1,187 @@
+{
+  "indoor": {
+    "crafting": [
+      "pottery",
+      "knitting",
+      "crochet",
+      "sewing",
+      "embroidery",
+      "drawing",
+      "painting",
+      "watercolor",
+      "sculpture",
+      "woodworking",
+      "jewelry making",
+      "paper crafts",
+      "calligraphy",
+      "bookbinding",
+      "textile arts"
+    ],
+    "music": [
+      "singing",
+      "choir",
+      "amateur music",
+      "drumming",
+      "hand-drumming",
+      "guitar",
+      "piano",
+      "ukulele",
+      "music theory",
+      "songwriting",
+      "music appreciation",
+      "orchestra",
+      "band practice"
+    ],
+    "cooking/bakery": [
+      "baking",
+      "cooking basics",
+      "pastry making",
+      "bread making",
+      "cake decorating",
+      "international cuisine",
+      "vegetarian cooking",
+      "meal prep",
+      "preserving",
+      "chocolate making"
+    ],
+    "gardening": [
+      "indoor plants",
+      "herb growing",
+      "seed starting",
+      "plant propagation",
+      "terrarium making",
+      "hydroponics",
+      "houseplant care"
+    ],
+    "yoga": [
+      "hatha yoga",
+      "vinyasa yoga",
+      "yin yoga",
+      "restorative yoga",
+      "yoga for beginners",
+      "meditation",
+      "mindfulness"
+    ],
+    "meditation": [
+      "guided meditation",
+      "mindfulness",
+      "breathing exercises",
+      "relaxation techniques"
+    ],
+    "discussion group": [
+      "book club",
+      "philosophy",
+      "current events",
+      "literature",
+      "history",
+      "science",
+      "language exchange"
+    ],
+    "dance": [
+      "ballroom dancing",
+      "salsa",
+      "folk dancing",
+      "line dancing",
+      "dance fitness",
+      "contemporary dance"
+    ]
+  },
+  "outdoor": {
+    "walks": [
+      "riverside walks",
+      "nature walks",
+      "urban walks",
+      "hiking",
+      "rambling",
+      "coastal walks",
+      "park walks",
+      "sunset walks",
+      "photography walks"
+    ],
+    "gardening": [
+      "community gardening",
+      "allotment gardening",
+      "vegetable growing",
+      "flower gardening",
+      "composting",
+      "garden maintenance",
+      "seasonal planting"
+    ],
+    "cooking/bakery": [
+      "outdoor cooking",
+      "BBQ skills",
+      "campfire cooking"
+    ],
+    "music": [
+      "outdoor music sessions",
+      "drum circles",
+      "singing outdoors"
+    ]
+  },
+  "both": {
+    "crafting": [
+      "photography",
+      "sketching",
+      "nature journaling"
+    ],
+    "music": [
+      "music appreciation",
+      "outdoor concerts"
+    ],
+    "walks": [
+      "walking groups",
+      "social walks"
+    ],
+    "gardening": [
+      "gardening workshops",
+      "plant swaps"
+    ]
+  },
+  "categories": [
+    {
+      "value": "crafting",
+      "label": "Crafting"
+    },
+    {
+      "value": "music",
+      "label": "Music"
+    },
+    {
+      "value": "walks",
+      "label": "Walks"
+    },
+    {
+      "value": "cooking/bakery",
+      "label": "Cooking/Bakery"
+    },
+    {
+      "value": "gardening",
+      "label": "Gardening"
+    },
+    {
+      "value": "yoga",
+      "label": "Yoga"
+    },
+    {
+      "value": "meditation",
+      "label": "Meditation"
+    },
+    {
+      "value": "discussion group",
+      "label": "Discussion Group"
+    },
+    {
+      "value": "dance",
+      "label": "Dance"
+    },
+    {
+      "value": "amateur music",
+      "label": "Amateur Music"
+    },
+    {
+      "value": "drumming",
+      "label": "Drumming"
+    }
+  ]
+}
+
