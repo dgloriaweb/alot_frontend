@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Vue Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alot_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api
+    networks:
+      - alot_network
+    command: npm run dev -- --host 0.0.0.0
+
+  # Laravel Backend (assumes backend is in ../alot_backend)
+  backend:
+    build:
+      context: ../alot_backend
+      dockerfile: Dockerfile
+    container_name: alot_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../alot_backend:/var/www/html
+      - ../alot_backend/vendor:/var/www/html/vendor
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=alot_db
+      - DB_USERNAME=alot_user
+      - DB_PASSWORD=alot_password
+    depends_on:
+      - mysql
+    networks:
+      - alot_network
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: alot_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: alot_db
+      MYSQL_USER: alot_user
+      MYSQL_PASSWORD: alot_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - alot_network
+
+  # MailHog for email testing
+  mailhog:
+    image: mailhog/mailhog
+    container_name: alot_mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - alot_network
+
+networks:
+  alot_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+

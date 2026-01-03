@@ -1,54 +1,59 @@
 <template>
-  <section>
-    <article class="card hero-card">
-      <p class="eyebrow">Hero</p>
-      <h1>{{ hero.title }}</h1>
-      <p class="lead">{{ hero.subtitle }}</p>
-      <p class="explanation">{{ hero.description }}</p>
-      <div class="hero-actions">
-        <router-link class="btn btn-primary" to="/browse">Browse activities</router-link>
-        <router-link class="btn btn-secondary" to="/post-ad">Share an opportunity</router-link>
-      </div>
-    </article>
-
-    <div class="user-types-grid">
-      <article
-        v-for="path in userPaths"
-        :key="path.id"
-        class="card user-type-card"
-      >
-        <figure class="user-type-figure">
-          <img :src="path.image" :alt="path.alt" loading="lazy" />
-          <figcaption>{{ path.photoCredit }}</figcaption>
-        </figure>
-        <p class="user-type-who"><strong>{{ path.who }}</strong></p>
-        <p class="user-type-why"><em>{{ path.why }}</em></p>
-        <p class="user-type-how">{{ path.how }}</p>
-        <router-link :class="['btn', `btn-${path.type}`]" :to="path.ctaLink">
-          {{ path.cta }}
-        </router-link>
+  <section class="home-container">
+    <div class="left-column">
+      <article class="card hero-card">
+        <p class="eyebrow">Hero</p>
+        <h1>{{ hero.title }}</h1>
+        <p class="lead">{{ hero.subtitle }}</p>
+        <p class="explanation">{{ hero.description }}</p>
       </article>
+
+      <div class="user-types-grid">
+        <article
+          v-for="path in userPaths"
+          :key="path.id"
+          class="card user-type-card"
+        >
+          <figure class="user-type-figure">
+            <img :src="path.image" :alt="path.alt" loading="lazy" />
+            <figcaption>{{ path.photoCredit }}</figcaption>
+          </figure>
+          <p class="user-type-who"><strong>{{ path.who }}</strong></p>
+          <p class="user-type-why"><em>{{ path.why }}</em></p>
+          <p class="user-type-how">{{ path.how }}</p>
+          <router-link :class="['btn', `btn-${path.type}`]" :to="path.ctaLink">
+            {{ path.cta }}
+          </router-link>
+        </article>
+      </div>
     </div>
 
-    <article class="card" v-if="peekAds.length">
-      <h2>Peek into content</h2>
-      <p class="peek-description">Latest opportunities shared by the community (mock data).</p>
-      <ul class="latest-list">
-        <li v-for="ad in peekAds" :key="ad.id">
-          <div class="latest-meta">
-            <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
-            <span>{{ ad.location }}</span>
-            <span>{{ formatPublished(ad.publishedAt) }}</span>
-          </div>
-          <h3>{{ ad.title }}</h3>
-          <p>{{ snippet(ad.summary || ad.details || '') }}</p>
-        </li>
-      </ul>
-    </article>
+    <div class="right-column">
+      <article class="card map-frame">
+        <h2>Map</h2>
+        <p class="placeholder-text">Map placeholder - details later</p>
+      </article>
 
-    <article class="card" v-if="error">
-      <p class="error">{{ error }}</p>
-    </article>
+      <article class="card feed-card" v-if="peekAds.length">
+        <h2>Peek into content</h2>
+        <p class="peek-description">Latest opportunities shared by the community (mock data).</p>
+        <ul class="latest-list">
+          <li v-for="ad in peekAds" :key="ad.id">
+            <div class="latest-meta">
+              <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
+              <span>{{ ad.location }}</span>
+              <span>{{ formatPublished(ad.publishedAt) }}</span>
+            </div>
+            <h3>{{ ad.title }}</h3>
+            <p>{{ snippet(ad.summary || ad.details || '') }}</p>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card" v-if="error">
+        <p class="error">{{ error }}</p>
+      </article>
+    </div>
   </section>
 </template>
 
@@ -184,6 +189,26 @@ function getBadgeClass(type) {
 </script>
 
 <style scoped>
+.home-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .hero-card {
   background: linear-gradient(135deg, #ffffff 0%, #f0fffc 100%);
   border: 1px solid #d3f2ee;
@@ -217,17 +242,10 @@ h1 {
   line-height: 1.7;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 .user-types-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  margin-bottom: 30px;
 }
 
 .user-type-card {
@@ -311,11 +329,39 @@ h1 {
   background-color: #8e44ad;
 }
 
+.map-frame {
+  min-height: 300px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-frame h2 {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.placeholder-text {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+.feed-card {
+  position: sticky;
+  top: 20px;
+}
+
 .latest-list {
   list-style: none;
   margin-top: 15px;
   display: grid;
   gap: 15px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
 .latest-meta {
@@ -358,6 +404,7 @@ h1 {
 .latest-list h3 {
   margin-bottom: 5px;
   color: #2c3e50;
+  font-size: 1.1rem;
 }
 
 .peek-description {
@@ -365,13 +412,30 @@ h1 {
   margin-bottom: 10px;
 }
 
-@media (max-width: 768px) {
-  .user-types-grid {
+@media (max-width: 1200px) {
+  .home-container {
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-container {
     grid-template-columns: 1fr;
   }
 
-  .hero-actions {
-    flex-direction: column;
+  .feed-card {
+    position: static;
+  }
+
+  .latest-list {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-types-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

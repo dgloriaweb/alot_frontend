@@ -102,6 +102,18 @@ create json to use in my-ads and other pages with sample data, at least 3 rows.
 
 # FRONTEND
 ## dashboard/main page
+
+### Layout Structure
+Wide page layout with two columns:
+
+**Left Column (main content):**
+- Hero section
+- 4 navigation cards in 2x2 grid
+
+**Right Column (sidebar):**
+- Map frame (details later)
+- Latest ads feed ("Peek into content" section)
+
 ### Hero
 Title: ALOT Community Hub
 Subtitle: Building local communities through free and affordable leisure activities.
@@ -120,7 +132,7 @@ We connect busy adults with like-minded people and local opportunities for craft
 
  (fill in with the rest)
 
-### Peek into content
+### Peek into content (right column)
 List out and sort latest ads
 * type of ad (venue, etc)
 * short title given by the author
@@ -138,7 +150,7 @@ create nice flash messages at the top of the page, color coded, light green and 
 We use json examples to show structure that backend should provide
 
 ### startup
-npm run serve
+npm run dev
 
 ## post ad
 http://localhost:3000/post-ad

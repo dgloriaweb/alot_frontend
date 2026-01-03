@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /alot_frontend/
+  
+  # Handle requests to existing files/directories
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # Redirect all other requests to index.html
+  RewriteRule . /alot_frontend/index.html [L]
+</IfModule>
+
