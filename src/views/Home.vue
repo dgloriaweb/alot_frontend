@@ -2,9 +2,9 @@
   <section class="home-container">
     <article class="card hero-card">
       <div class="hero-content">
-        <div class="hero-image">
-          <img src="/src/images/banner.png" alt="ALOT Community Banner" />
-        </div>
+          <div class="hero-image">
+            <img src="/images/banner.png" alt="ALOT Community Banner" />
+          </div>
         <div class="hero-text">
           <h1>{{ hero.title }}</h1>
           <p class="lead">{{ hero.subtitle }}</p>
@@ -251,7 +251,7 @@ function getBadgeClass(type) {
   height: 100%;
   object-fit: cover;
   display: block;
-  content: url('/src/images/banner.png');
+  content: url('/images/banner.png');
 }
 
 @media (max-width: 768px) {
@@ -260,7 +260,7 @@ function getBadgeClass(type) {
   }
 
   .hero-image img {
-    content: url('/src/images/banner-narrow.png');
+    content: url('/images/banner-narrow.png');
   }
 }
 
