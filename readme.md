@@ -84,9 +84,18 @@ CSS variables defined in src/style.css:
 
 ### Layout
 - Max width: 1600px
+- Hero: Full-width with banner image (src/images/banner.png)
 - Two-column layout on desktop (main content + sidebar)
 - Single column on mobile (< 992px)
 - Responsive breakpoints: 1200px, 992px, 768px
+
+### Assets
+- Favicon: src/images/favicon.png
+- Hero banner: src/images/banner.png
+
+### Development
+- Localhost bypass: Authentication checks disabled on localhost:3000 for development
+- All data visible without login when running locally
 
 ## authentication
  - user enters email address (frontend: get login code)
@@ -117,19 +126,29 @@ create json to use in my-ads and other pages with sample data, at least 3 rows.
 ## dashboard/main page
 
 ### Layout Structure
-Wide page layout with two columns:
+**Desktop layout:**
+1. **Hero section** - Full width across entire page
+   - Banner image on left (40% width)
+   - Text content on right (60% width) with blended gradient background
+   - Min height: 200px
+2. **Two-column content below hero:**
+   - **Left Column**: 4 navigation cards in 2x2 grid
+   - **Right Column**: Map frame + Latest ads feed ("Peek into content")
 
-**Left Column (main content):**
-- Hero section
-- 4 navigation cards in 2x2 grid
-
-**Right Column (sidebar):**
-- Map frame (details later)
-- Latest ads feed ("Peek into content" section)
+**Mobile layout (< 768px):**
+- Hero: Banner image stacks on top, text below
+- Single column layout
+- 4 navigation cards with integrated image-buttons (image blended into button on left, text on right)
+- Map and feed below cards
 
 ### Hero
 Title: ALOT Community Hub
 Subtitle: Building local communities through free and affordable leisure activities.
+
+**Layout:**
+- Banner image (src/images/banner.png) on left side
+- Text content on right with gradient background blending with banner
+- Full-width section at top of page
 
 Description:
 We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.
@@ -138,9 +157,21 @@ We connect busy adults with like-minded people and local opportunities for craft
 - Long description text is hidden by default
 - "About..." button appears to toggle description visibility
 - Button text changes to "Hide details" when expanded
+- Banner image stacks on top, text below
 
 ### Navigation
 4 sections aligned into 2x2 card grid (can add free stock photo later with resource indication)
+
+**Desktop:**
+- Full card with image at top
+- Text content (who, why, how)
+- Colored button at bottom (full width)
+
+**Mobile (< 768px):**
+- Text content (who, why, how) at top
+- Image integrated into button (image 25% on left, button text 75% on right)
+- Full-width clickable button with blended image
+- Top image hidden on mobile
 
 #### arrangement
  * picture of a bored, sad woman in her kitchen, maybe looking out her window

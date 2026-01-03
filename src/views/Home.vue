@@ -47,8 +47,10 @@
         <article class="card feed-card" v-if="peekAds.length">
           <h2>Peek into content</h2>
           <p class="peek-description">Latest opportunities shared by the community (mock data).</p>
+
           <ul class="latest-list">
             <li v-for="ad in peekAds" :key="ad.id">
+              <hr><br>
               <div class="latest-meta">
                 <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
                 <span>{{ ad.location }}</span>
@@ -241,8 +243,7 @@ function getBadgeClass(type) {
 }
 
 .hero-image {
-  flex: 0 0 40%;
-  min-height: 200px;
+  flex: 0 0 32%;
 }
 
 .hero-image img {
@@ -250,6 +251,17 @@ function getBadgeClass(type) {
   height: 100%;
   object-fit: cover;
   display: block;
+  content: url('/src/images/banner.png');
+}
+
+@media (max-width: 768px) {
+  .hero-image {
+    flex: 0 0 auto;
+  }
+
+  .hero-image img {
+    content: url('/src/images/banner-narrow.png');
+  }
 }
 
 .hero-text {
@@ -560,11 +572,10 @@ h1 {
 
   .hero-image {
     flex: 0 0 auto;
-    min-height: 200px;
   }
 
   .hero-text {
-    padding: 20px;
+    padding: 15px;
     background: linear-gradient(to bottom, rgba(240, 255, 252, 0.95) 0%, rgba(255, 255, 255, 0.98) 50%, #ffffff 100%);
   }
 
