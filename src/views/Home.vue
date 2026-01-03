@@ -1,61 +1,69 @@
 <template>
   <section class="home-container">
-    <div class="left-column">
-      <article class="card hero-card">
-        <p class="eyebrow">Hero</p>
-        <h1>{{ hero.title }}</h1>
-        <p class="lead">{{ hero.subtitle }}</p>
-        <button class="about-toggle" @click="showAbout = !showAbout">
-          {{ showAbout ? 'Hide details' : 'About...' }}
-        </button>
-        <p class="explanation" :class="{ 'show-mobile': showAbout }">{{ hero.description }}</p>
-      </article>
+    <article class="card hero-card">
+      <div class="hero-content">
+        <div class="hero-image">
+          <img src="/src/images/banner.png" alt="ALOT Community Banner" />
+        </div>
+        <div class="hero-text">
+          <h1>{{ hero.title }}</h1>
+          <p class="lead">{{ hero.subtitle }}</p>
+          <button class="about-toggle" @click="showAbout = !showAbout">
+            {{ showAbout ? 'Hide details' : 'About...' }}
+          </button>
+          <p class="explanation" :class="{ 'show-mobile': showAbout }">{{ hero.description }}</p>
+        </div>
+      </div>
+    </article>
 
-      <div class="user-types-grid">
-        <article
-          v-for="path in userPaths"
-          :key="path.id"
-          class="card user-type-card"
-        >
-          <figure class="user-type-figure">
-            <img :src="path.image" :alt="path.alt" loading="lazy" />
-            <figcaption>{{ path.photoCredit }}</figcaption>
-          </figure>
-          <p class="user-type-who"><strong>{{ path.who }}</strong></p>
-          <p class="user-type-why"><em>{{ path.why }}</em></p>
-          <p class="user-type-how">{{ path.how }}</p>
-          <router-link :class="['btn', `btn-${path.type}`]" :to="path.ctaLink">
-            {{ path.cta }}
-          </router-link>
+    <div class="content-columns">
+      <div class="left-column">
+        <div class="user-types-grid">
+          <article
+            v-for="path in userPaths"
+            :key="path.id"
+            class="card user-type-card"
+          >
+            <figure class="user-type-figure">
+              <img :src="path.image" :alt="path.alt" loading="lazy" />
+              <figcaption>{{ path.photoCredit }}</figcaption>
+            </figure>
+            <p class="user-type-who"><strong>{{ path.who }}</strong></p>
+            <p class="user-type-why"><em>{{ path.why }}</em></p>
+            <p class="user-type-how">{{ path.how }}</p>
+            <router-link :class="['btn', `btn-${path.type}`]" :to="path.ctaLink">
+              <span>{{ path.cta }}</span>
+            </router-link>
+          </article>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <article class="card map-frame">
+          <h2>Map</h2>
+          <p class="placeholder-text">Map placeholder - details later</p>
+        </article>
+
+        <article class="card feed-card" v-if="peekAds.length">
+          <h2>Peek into content</h2>
+          <p class="peek-description">Latest opportunities shared by the community (mock data).</p>
+          <ul class="latest-list">
+            <li v-for="ad in peekAds" :key="ad.id">
+              <div class="latest-meta">
+                <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
+                <span>{{ ad.location }}</span>
+                <span>{{ formatPublished(ad.publishedAt) }}</span>
+              </div>
+              <h3>{{ ad.title }}</h3>
+              <p>{{ snippet(ad.summary || ad.details || '') }}</p>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card" v-if="error">
+          <p class="error">{{ error }}</p>
         </article>
       </div>
-    </div>
-
-    <div class="right-column">
-      <article class="card map-frame">
-        <h2>Map</h2>
-        <p class="placeholder-text">Map placeholder - details later</p>
-      </article>
-
-      <article class="card feed-card" v-if="peekAds.length">
-        <h2>Peek into content</h2>
-        <p class="peek-description">Latest opportunities shared by the community (mock data).</p>
-        <ul class="latest-list">
-          <li v-for="ad in peekAds" :key="ad.id">
-            <div class="latest-meta">
-              <span :class="['badge', `badge-${getBadgeClass(ad.type)}`]">{{ ad.type }}</span>
-              <span>{{ ad.location }}</span>
-              <span>{{ formatPublished(ad.publishedAt) }}</span>
-            </div>
-            <h3>{{ ad.title }}</h3>
-            <p>{{ snippet(ad.summary || ad.details || '') }}</p>
-          </li>
-        </ul>
-      </article>
-
-      <article class="card" v-if="error">
-        <p class="error">{{ error }}</p>
-      </article>
     </div>
   </section>
 </template>
@@ -194,11 +202,17 @@ function getBadgeClass(type) {
 
 <style scoped>
 .home-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.content-columns {
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 30px;
-  max-width: 1600px;
-  margin: 0 auto;
 }
 
 .left-column {
@@ -216,6 +230,35 @@ function getBadgeClass(type) {
 .hero-card {
   background: linear-gradient(135deg, #ffffff 0%, #f0fffc 100%);
   border: 1px solid #d3f2ee;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero-content {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.hero-image {
+  flex: 0 0 40%;
+  min-height: 200px;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-text {
+  flex: 1;
+  padding: 30px 40px;
+  background: linear-gradient(to right, rgba(240, 255, 252, 0.95) 0%, rgba(255, 255, 255, 0.98) 50%, #ffffff 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .eyebrow {
@@ -434,14 +477,14 @@ h1 {
 }
 
 @media (max-width: 1200px) {
-  .home-container {
+  .content-columns {
     grid-template-columns: 1fr 350px;
     gap: 20px;
   }
 }
 
 @media (max-width: 992px) {
-  .home-container {
+  .content-columns {
     grid-template-columns: 1fr;
   }
 
@@ -457,6 +500,72 @@ h1 {
 @media (max-width: 768px) {
   .user-types-grid {
     grid-template-columns: 1fr;
+  }
+
+  .user-type-card {
+    padding-bottom: 20px;
+  }
+
+  .user-type-figure {
+    display: none;
+  }
+
+  .user-type-card .btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    overflow: hidden;
+    margin-top: 15px;
+  }
+
+  .user-type-card .btn::before {
+    content: '';
+    display: block;
+    width: 25%;
+    min-width: 80px;
+    height: 100%;
+    min-height: 60px;
+    background-image: var(--btn-image);
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+
+  .btn-attendant {
+    --btn-image: url('https://images.unsplash.com/photo-1695665128110-703ff866cdab?q=80&w=auto=format&fit=crop&w=640&q=80');
+  }
+
+  .btn-tutor {
+    --btn-image: url('https://images.unsplash.com/photo-1761034114091-6d30447e25aa?auto=format&fit=crop&w=640&q=80');
+  }
+
+  .btn-venue {
+    --btn-image: url('https://images.unsplash.com/photo-1616045152590-ebda3a20804c?auto=format&fit=crop&w=640&q=80');
+  }
+
+  .btn-organiser {
+    --btn-image: url('https://images.unsplash.com/photo-1601566674556-3ac2a27fec9f?auto=format&fit=crop&w=640&q=80');
+  }
+
+  .user-type-card .btn span {
+    flex: 1;
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  .hero-content {
+    flex-direction: column;
+  }
+
+  .hero-image {
+    flex: 0 0 auto;
+    min-height: 200px;
+  }
+
+  .hero-text {
+    padding: 20px;
+    background: linear-gradient(to bottom, rgba(240, 255, 252, 0.95) 0%, rgba(255, 255, 255, 0.98) 50%, #ffffff 100%);
   }
 
   .about-toggle {
