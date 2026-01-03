@@ -75,6 +75,19 @@ If you don't find, please describe your activity here introducing yourself, why,
 Laravel,
 Vue 3 / vite
 
+## design system
+### Colors
+CSS variables defined in src/style.css:
+- Primary brand: teal (#38d4c7)
+- User type colors: blue (organiser), orange (attendant), green (venue), purple (tutor)
+- All colors available as CSS custom properties in :root
+
+### Layout
+- Max width: 1600px
+- Two-column layout on desktop (main content + sidebar)
+- Single column on mobile (< 992px)
+- Responsive breakpoints: 1200px, 992px, 768px
+
 ## authentication
  - user enters email address (frontend: get login code)
  - user login:
@@ -121,6 +134,11 @@ Subtitle: Building local communities through free and affordable leisure activit
 Description:
 We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.
 
+**Mobile behavior:**
+- Long description text is hidden by default
+- "About..." button appears to toggle description visibility
+- Button text changes to "Hide details" when expanded
+
 ### Navigation
 4 sections aligned into 2x2 card grid (can add free stock photo later with resource indication)
 
@@ -141,6 +159,15 @@ List out and sort latest ads
 ## navigation/routing structure
 image.png 
 home > Attendant Page
+
+### Navigation bar
+- Logo on the left: "ALOT Community Hub"
+- Navigation links and login button on the right in one line
+- Compact sizing for clean look
+- Responsive: Hamburger menu appears on screens < 992px
+- Mobile menu slides in from right side
+- Background: subtle teal gradient with shadow
+- Padding: 15px vertical, 30px horizontal
 
 
 ## component hierarchy

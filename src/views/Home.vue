@@ -5,7 +5,10 @@
         <p class="eyebrow">Hero</p>
         <h1>{{ hero.title }}</h1>
         <p class="lead">{{ hero.subtitle }}</p>
-        <p class="explanation">{{ hero.description }}</p>
+        <button class="about-toggle" @click="showAbout = !showAbout">
+          {{ showAbout ? 'Hide details' : 'About...' }}
+        </button>
+        <p class="explanation" :class="{ 'show-mobile': showAbout }">{{ hero.description }}</p>
       </article>
 
       <div class="user-types-grid">
@@ -70,6 +73,10 @@ const hero = {
     'Building local communities through free and affordable leisure activities. We connect busy adults with like-minded people and local opportunities for crafting, music, walks, cooking, gardening, and more. Our platform helps you find regular, reliable sessions that fit your schedule and budget, creating safe spaces for adults aged 21 and above.'
 }
 
+const showAbout = ref(false)
+const latestAds = ref([])
+const error = ref('')
+
 const userPaths = [
   {
     id: 'path-free-time',
@@ -124,9 +131,6 @@ const userPaths = [
     ctaLink: '/post-ad?type=organiser'
   }
 ]
-
-const latestAds = ref([])
-const error = ref('')
 
 // Combine mockAds and mockMyAds, then sort by publishedAt in descending order
 // Deduplicate by title and location to avoid showing the same ad twice
@@ -237,9 +241,26 @@ h1 {
 }
 
 .explanation {
-  margin: 0 0 30px;
+  margin: 0;
   color: #666;
   line-height: 1.7;
+}
+
+.about-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #38d4c7;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.3s;
+}
+
+.about-toggle:hover {
+  color: #2fb3a9;
 }
 
 .user-types-grid {
@@ -436,6 +457,28 @@ h1 {
 @media (max-width: 768px) {
   .user-types-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-toggle {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .explanation {
+    display: none;
+  }
+
+  .explanation.show-mobile {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .lead {
+    font-size: 1.1em;
   }
 }
 </style>
